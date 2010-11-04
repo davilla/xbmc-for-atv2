@@ -4,6 +4,8 @@
 #    make
 #    sudo make install
 
+include ../config.mk
+
 # lib name, version
 LIBNAME=pcre
 VERSION=7.9
@@ -12,7 +14,10 @@ SOURCE=$(LIBNAME)-$(VERSION)
 BASE_URL=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre
 ARCHIVE=$(SOURCE).tar.gz
 # configuration settings
-CONFIGURE=--host=arm-apple-darwin --enable-shared=yes --disable-stack-for-recursion CFLAGS="-read_only_relocs suppress" CXXFLAGS="-read_only_relocs suppress"
+CFLAGS+=-undefined dynamic_lookup
+CXXFLAGS+=-undefined dynamic_lookup
+LDFLAGS+="-Wl,-read_only_relocs,suppress"
+CONFIGURE=./configure --prefix=$(PREFIX) --host=arm-apple-darwin --enable-shared=yes --disable-stack-for-recursion CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" LDFLAGS="$(LDFLAGS)"
 
 RETRIEVE_TOOL=curl
 RETRIEVE_TOOL_FLAGS=-Ls --output $(ARCHIVE)
@@ -31,7 +36,7 @@ $(ARCHIVE):
 $(SOURCE): $(ARCHIVE)
 	-rm -rf $(SOURCE)
 	$(ARCHIVE_TOOL) $(ARCHIVE_TOOL_FLAGS) $(ARCHIVE)
-	cd $(SOURCE); ../../configure-atv.sh $(CONFIGURE)
+	cd $(SOURCE); $(CONFIGURE)
 
 $(LIBDYLIB): $(SOURCE)
 	make -C $(SOURCE)
