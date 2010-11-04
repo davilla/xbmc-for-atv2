@@ -4,5 +4,4 @@
 -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.1.sdk \
 -I/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.1.sdk/usr/lib/gcc/arm-apple-darwin10/4.2.1/include \
 -I/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.1.sdk/usr/include \
--o hello hello.c \
-../mysqlclient/Kentzo-MySQL-Client-Library-for-iPhone-3c07b89/libmysqlclient.a
+-o hello hello.c
