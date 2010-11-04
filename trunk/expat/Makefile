@@ -14,11 +14,10 @@ SOURCE=$(LIBNAME)-$(VERSION)
 BASE_URL=http://surfnet.dl.sourceforge.net/project/expat/expat/2.0.1
 ARCHIVE=$(SOURCE).tar.gz
 # configuration settings
-CFLAGS+=-undefined dynamic_lookup
-CXXFLAGS+=-undefined dynamic_lookup
-LDFLAGS+="-Wl,-read_only_relocs,suppress"
-CONFIGURE=./configure  --prefix=$(PREFIX) --host=arm-apple-darwin --enable-shared=yes CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" LDFLAGS="$(LDFLAGS)"
-
+export CFLAGS+=-undefined dynamic_lookup
+export CXXFLAGS+=-undefined dynamic_lookup
+export LDFLAGS+=-Wl,-read_only_relocs,suppress
+CONFIGURE=./configure  --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes
 
 RETRIEVE_TOOL=curl
 RETRIEVE_TOOL_FLAGS=-Ls --output $(ARCHIVE)
