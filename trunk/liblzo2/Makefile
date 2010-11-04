@@ -4,6 +4,8 @@
 #    make
 #    sudo make install
 
+include ../config.mk
+
 # lib name, version
 LIBNAME=lzo
 VERSION=2.03
@@ -12,7 +14,9 @@ SOURCE=$(LIBNAME)-$(VERSION)
 BASE_URL=http://www.oberhumer.com/opensource/lzo/download
 ARCHIVE=$(SOURCE).tar.gz
 # configuration settings
-CONFIGURE=--host=arm-apple-darwin --enable-shared=yes
+export CFLAGS+=-undefined dynamic_lookup
+export LDFLAGS+=-Wl,-read_only_relocs,suppress
+CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes
 
 RETRIEVE_TOOL=curl
 RETRIEVE_TOOL_FLAGS=-Ls --output $(ARCHIVE)
@@ -32,7 +36,7 @@ $(SOURCE): $(ARCHIVE)
 	-rm -rf $(SOURCE)
 	$(ARCHIVE_TOOL) $(ARCHIVE_TOOL_FLAGS) $(ARCHIVE)
 	cd $(SOURCE); patch -p1 < ../01-liblzo2-only-build-lib.patch
-	cd $(SOURCE); ../../configure-atv.sh $(CONFIGURE)
+	cd $(SOURCE); $(CONFIGURE)
 
 $(LIBDYLIB): $(SOURCE)
 	make -C $(SOURCE)
