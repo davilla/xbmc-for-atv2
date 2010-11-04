@@ -13,11 +13,12 @@ SOURCE=$(LIBNAME)-$(VERSION)
 # download location and format
 BASE_URL=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre
 ARCHIVE=$(SOURCE).tar.gz
+
 # configuration settings
-CFLAGS+=-undefined dynamic_lookup
-CXXFLAGS+=-undefined dynamic_lookup
-LDFLAGS+="-Wl,-read_only_relocs,suppress"
-CONFIGURE=./configure --prefix=$(PREFIX) --host=arm-apple-darwin --enable-shared=yes --disable-stack-for-recursion CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" LDFLAGS="$(LDFLAGS)"
+export CFLAGS+=-undefined dynamic_lookup
+export CXXFLAGS+=-undefined dynamic_lookup
+export LDFLAGS+=-Wl,-read_only_relocs,suppress
+CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes --disable-stack-for-recursion
 
 RETRIEVE_TOOL=curl
 RETRIEVE_TOOL_FLAGS=-Ls --output $(ARCHIVE)
@@ -40,6 +41,9 @@ $(SOURCE): $(ARCHIVE)
 
 $(LIBDYLIB): $(SOURCE)
 	make -C $(SOURCE)
+
+configure:
+	cd $(SOURCE); $(CONFIGURE)
 
 install:
 	sudo make -C $(SOURCE) install
