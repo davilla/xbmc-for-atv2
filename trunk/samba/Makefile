@@ -4,6 +4,8 @@
 #    make
 #    sudo make install
 
+include ../config.mk
+
 # lib name, version
 LIBNAME=samba
 VERSION=3.3.14
@@ -11,13 +13,17 @@ SOURCE=$(LIBNAME)-$(VERSION)
 # download location and format
 BASE_URL=http://us1.samba.org/samba/ftp/stable
 ARCHIVE=$(SOURCE).tar.gz
-# configuration settings
-CONFIGURE=--host=arm-apple-darwin10 --enable-shared=yes samba_cv_CC_NEGATIVE_ENUM_VALUES=yes --with-fhs --without-cluster-support --disable-swat --without-ldap CFLAGS="-read_only_relocs suppress"
 
 RETRIEVE_TOOL=curl
 RETRIEVE_TOOL_FLAGS=-Ls --output $(ARCHIVE)
 ARCHIVE_TOOL=tar
 ARCHIVE_TOOL_FLAGS=xf
+
+# configuration settings
+export CFLAGS+=-undefined dynamic_lookup
+export CXXFLAGS+=-undefined dynamic_lookup
+export LDFLAGS+=-Wl,-read_only_relocs,suppress
+CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes samba_cv_CC_NEGATIVE_ENUM_VALUES=yes --with-fhs --without-cluster-support --disable-swat --without-ldap
 
 LIBDYLIB=$(SOURCE)/source/(LIBNAME).dylib
 
@@ -31,7 +37,7 @@ $(ARCHIVE):
 $(SOURCE): $(ARCHIVE)
 	-rm -rf $(SOURCE)
 	$(ARCHIVE_TOOL) $(ARCHIVE_TOOL_FLAGS) $(ARCHIVE)
-	cd $(SOURCE)/source; ../../../configure-atv.sh $(CONFIGURE)
+	cd $(SOURCE)/source; $(CONFIGURE)
 
 $(LIBDYLIB): $(SOURCE)
 	make -C $(SOURCE)/source

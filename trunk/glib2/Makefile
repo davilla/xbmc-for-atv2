@@ -4,6 +4,8 @@
 #    make
 #    sudo make install
 
+include ../config.mk
+
 # lib name, version
 LIBNAME=glib
 VERSION=2.20.4
@@ -11,13 +13,17 @@ SOURCE=$(LIBNAME)-$(VERSION)
 # download location and format
 BASE_URL=http://ftp.gnome.org/pub/gnome/sources/glib/2.20
 ARCHIVE=$(SOURCE).tar.gz
-# configuration settings
-CONFIGURE=--host=arm-apple-darwin --enable-shared glib_cv_stack_grows=no glib_cv_uscore=yes ac_cv_func_posix_getpwuid_r=yes ac_cv_func_posix_getgrgid_r=yes --with-libiconv=native CFLAGS="-read_only_relocs suppress" CXXFLAGS="-read_only_relocs suppress"
 
 RETRIEVE_TOOL=curl
 RETRIEVE_TOOL_FLAGS=-Ls --output $(ARCHIVE)
 ARCHIVE_TOOL=tar
 ARCHIVE_TOOL_FLAGS=xf
+
+# configuration settings
+export CFLAGS+=-undefined dynamic_lookup
+export CXXFLAGS+=-undefined dynamic_lookup
+export LDFLAGS+=-Wl,-read_only_relocs,suppress
+CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared glib_cv_stack_grows=no glib_cv_uscore=yes ac_cv_func_posix_getpwuid_r=yes ac_cv_func_posix_getgrgid_r=yes --with-libiconv=native
 
 LIBDYLIB=$(SOURCE)/.libs/lib$(LIBNAME).dylib
 
@@ -32,7 +38,7 @@ $(SOURCE): $(ARCHIVE)
 	-rm -rf $(SOURCE)
 	$(ARCHIVE_TOOL) $(ARCHIVE_TOOL_FLAGS) $(ARCHIVE)
 	cd $(SOURCE); patch -p1 < ../01-fix-libiconv-error.patch
-	cd $(SOURCE); ../../configure-atv.sh $(CONFIGURE)
+	cd $(SOURCE); $(CONFIGURE)
 
 $(LIBDYLIB): $(SOURCE)
 	make -C $(SOURCE)
