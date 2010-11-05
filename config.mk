@@ -1,5 +1,3 @@
-### Copyright (c) 2010 by Scott D. Davilla, All Rights Reserved.
-
 platform_os=iPhoneOS
 platform_os_version=4.1
 platform_host=arm-apple-darwin
@@ -41,32 +39,5 @@ export PREFIX=${prefix_path}
 export DEVROOT=${platform_path}
 export SDKROOT=${platform_sdk_path}
 export PKG_CONFIG_PATH=${prefix_path}:${platform_sdk_path}/usr/lib/pkgconfig
-
-# do it this way to not pollute our command-line name space
-#NM=${NM} \
-#AR=${AR} \
-#AS=${AS} \
-#LD=${LD} \
-#CC=${CC} \
-#CCAS=${CCAS} \
-#CFLAGS=${CFLAGS} \
-#LDFLAGS=${LDFLAGS} \
-#CXX=${CXX} \
-#CXXFLAGS=${CXXFLAGS} \
-#CPP=${CPP} \
-#CXXCPP=${CXXCPP} \
-#CPPFLAGS=${CPPFLAGS} \
-#STRIP=${STRIP} \
-#RANLIB=${RANLIB} \
-#LIBTOOL=${LIBTOOL} \
-#PKG_CONFIG_PATH=${PKG_CONFIG_PATH} \
-#PATH="${prefix_path}/bin:${platform_bin_path}:$PATH" \
-#PREFIX="${prefix_path}" \
-#DEVROOT="${platform_path}" \
-#SDKROOT="${platform_sdk_path}" \
-
 export PATH:=${prefix_path}/bin:${platform_bin_path}:$(PATH)
-#./configure \
-#    --prefix="${prefix_path}" \
-#    "$@" || exit
 
