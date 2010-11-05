@@ -22,7 +22,7 @@ ARCHIVE_TOOL_FLAGS=xf
 # configuration settings 
 export CFLAGS+=-undefined dynamic_lookup
 export CXXFLAGS+=-undefined dynamic_lookup
-export LDFLAGS+=-Wl,-read_only_relocs,suppress
+export LDFLAGS+=-Wl,-read_only_relocs,suppress -Wl,-undefined,dynamic_lookup
 CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes --with-arch=arm --enable-libxml2 --disable-docs --with-freetype-config=$(PREFIX)/bin/freetype-config
 
 LIBDYLIB=$(SOURCE)/.libs/lib$(LIBNAME).dylib
