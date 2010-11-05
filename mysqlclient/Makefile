@@ -4,6 +4,8 @@
 #    make
 #    sudo make install
 
+include ../config.mk
+
 LIBNAME=mysql
 VERSION=5.0.89
 SOURCE=$(LIBNAME)-$(VERSION)

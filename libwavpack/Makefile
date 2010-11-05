@@ -4,6 +4,8 @@
 #    make
 #    sudo make install
 
+include ../config.mk
+
 # lib name, version
 LIBNAME=wavpack
 VERSION=4.60.1
@@ -11,13 +13,17 @@ SOURCE=$(LIBNAME)-$(VERSION)
 # download location and format
 BASE_URL=http://www.wavpack.com
 ARCHIVE=$(SOURCE).tar.bz2
-# configuration settings
-CONFIGURE=--host=arm-apple-darwin --enable-shared=yes CFLAGS="-Wl,-read_only_relocs,suppress"
 
 RETRIEVE_TOOL=curl
 RETRIEVE_TOOL_FLAGS=-Ls --output $(ARCHIVE)
 ARCHIVE_TOOL=tar
 ARCHIVE_TOOL_FLAGS=xf
+
+# configuration settings
+export CFLAGS+=-undefined dynamic_lookup
+export CXXFLAGS+=-undefined dynamic_lookup
+export LDFLAGS+=-Wl,-read_only_relocs,suppress
+CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes 
 
 LIBDYLIB=$(SOURCE)/.libs/lib$(LIBNAME).dylib
 
@@ -32,7 +38,7 @@ $(SOURCE): $(ARCHIVE)
 	-rm -rf $(SOURCE)
 	$(ARCHIVE_TOOL) $(ARCHIVE_TOOL_FLAGS) $(ARCHIVE)
 	#cd $(SOURCE); patch -p1 < ../01-libvorbis-fix-libtool-flags.patch
-	cd $(SOURCE); ../../configure-atv.sh $(CONFIGURE)
+	cd $(SOURCE); $(CONFIGURE)
 
 $(LIBDYLIB): $(SOURCE)
 	make -C $(SOURCE)

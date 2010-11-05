@@ -3,7 +3,9 @@
 #  Usage:
 #    make
 #    sudo make install
-ls
+
+include ../config.mk
+
 SOURCE=samba_3.2.7-4_iphoneos-arm
 # download location and format
 # wget http://apt.saurik.com/debs/samba_3.2.7-4_iphoneos-arm.deb

@@ -13,16 +13,17 @@ SOURCE=$(LIBNAME)-$(VERSION)
 # download location and format
 BASE_URL=http://surfnet.dl.sourceforge.net/project/expat/expat/2.0.1
 ARCHIVE=$(SOURCE).tar.gz
-# configuration settings
-export CFLAGS+=-undefined dynamic_lookup
-export CXXFLAGS+=-undefined dynamic_lookup
-export LDFLAGS+=-Wl,-read_only_relocs,suppress
-CONFIGURE=./configure  --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes
 
 RETRIEVE_TOOL=curl
 RETRIEVE_TOOL_FLAGS=-Ls --output $(ARCHIVE)
 ARCHIVE_TOOL=tar
 ARCHIVE_TOOL_FLAGS=xf
+
+# configuration settings
+export CFLAGS+=-undefined dynamic_lookup
+export CXXFLAGS+=-undefined dynamic_lookup
+export LDFLAGS+=-Wl,-read_only_relocs,suppress
+CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes
 
 LIBDYLIB=$(SOURCE)/.libs/(LIBNAME).dylib
 
