@@ -32,8 +32,7 @@ export AS=${platform_bin_path}/as
 export CCAS=--tag CC gas-preprocessor.pl ${CC}
 export STRIP=${platform_bin_path}/strip
 export RANLIB=${platform_bin_path}/ranlib
-export LIBTOOL=${platform_bin_path}/libtool"
-
+export LIBTOOL=${platform_bin_path}/libtool
 export HOST=${platform_host}
 export PREFIX=${prefix_path}
 export DEVROOT=${platform_path}
