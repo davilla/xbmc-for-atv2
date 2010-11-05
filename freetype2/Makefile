@@ -23,6 +23,8 @@ ARCHIVE_TOOL_FLAGS=xf
 export CFLAGS+=-undefined dynamic_lookup
 export CXXFLAGS+=-undefined dynamic_lookup
 export LDFLAGS+=-Wl,-read_only_relocs,suppress
+# force using internal libtool
+export LIBTOOL=builds/unix/libtool
 CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes
 
 LIBDYLIB=$(SOURCE)/objs/.libs/lib$(LIBNAME).dylib
