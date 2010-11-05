@@ -4,13 +4,14 @@
 #    make
 #    sudo make install
 
+include ../config.mk
+
 LIBNAME=boostoniphone
 VERSION=1.44.0
 SOURCE=$(LIBNAME)-$(VERSION)
 # download location and format
 # git clone git://gitorious.org/boostoniphone/boostoniphone.git
 ARCHIVE=$(SOURCE).tar.gz
-
 ARCHIVE_TOOL=tar
 ARCHIVE_TOOL_FLAGS=xf
 
@@ -29,7 +30,7 @@ $(LIBDYLIB): $(SOURCE)
 	cd $(SOURCE); ./boost.sh
 
 install:
-	sudo cp -rf $(SOURCE)/prefix/* /usr/local/xbmc-ios-4.1/ 
+	sudo cp -rf $(SOURCE)/prefix/* $(PREFIX) 
 
 clean:
 distclean::
