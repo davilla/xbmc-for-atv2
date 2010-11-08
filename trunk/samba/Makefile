@@ -8,7 +8,7 @@ include ../config.mk
 
 # lib name, version
 LIBNAME=samba
-VERSION=3.3.14
+VERSION=3.5.6
 SOURCE=$(LIBNAME)-$(VERSION)
 # download location and format
 BASE_URL=http://us1.samba.org/samba/ftp/stable
@@ -23,7 +23,8 @@ ARCHIVE_TOOL_FLAGS=xf
 export CFLAGS+=-undefined dynamic_lookup
 export CXXFLAGS+=-undefined dynamic_lookup
 export LDFLAGS+=-Wl,-read_only_relocs,suppress
-CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes samba_cv_CC_NEGATIVE_ENUM_VALUES=yes --with-fhs --without-cluster-support --disable-swat --without-ldap
+CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes \
+  samba_cv_CC_NEGATIVE_ENUM_VALUES=yes --without-cluster-support --disable-swat --without-ldap --with-fhs
 
 LIBDYLIB=$(SOURCE)/source/(LIBNAME).dylib
 
@@ -37,6 +38,7 @@ $(ARCHIVE):
 $(SOURCE): $(ARCHIVE)
 	-rm -rf $(SOURCE)
 	$(ARCHIVE_TOOL) $(ARCHIVE_TOOL_FLAGS) $(ARCHIVE)
+	cd $(SOURCE)/source; ./autogen.sh
 	cd $(SOURCE)/source; $(CONFIGURE)
 
 $(LIBDYLIB): $(SOURCE)
