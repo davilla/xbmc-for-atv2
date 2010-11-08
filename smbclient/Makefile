@@ -24,8 +24,12 @@ $(SOURCE): $(ARCHIVE)
 
 install:
 	sudo cp -rf $(SOURCE)/data/usr/* /usr/local/xbmc-ios-4.1/ 
-
+	install_name_tool -change bin/libtalloc.dylib.1 $(PREFIX)/lib/bin/libtalloc.dylib.1 \
+		-id $(PREFIX)/lib/libsmbclient.dylib $(PREFIX)/lib/libsmbclient.dylib
+        install_name_tool -change bin/libtdb.dylib.1 $(PREFIX)/lib/bin/libtdb.dylib.1 \
+                -id $(PREFIX)/lib/libsmbclient.dylib $(PREFIX)/lib/libsmbclient.dylib
 clean:
+
 distclean::
 	rm -rf $(SOURCE)
 
