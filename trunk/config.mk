@@ -3,7 +3,7 @@ platform_os_version=4.1
 platform_host=arm-apple-darwin
 platform_path=/Developer/Platforms/iPhoneOS.platform/Developer
 platform_os_min=iphoneos-version-min=${platform_os_version}
-platform_os_cflags=-march=armv7 -mcpu=cortex-a8 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -mdynamic-no-pic -pipe -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -fmessage-length=0 -fvisibility=hidden -gdwarf-2 -no-force_cpusubtype_ALL
+platform_os_cflags=-march=armv7 -mcpu=cortex-a8 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -mdynamic-no-pic -pipe -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -fmessage-length=0 -gdwarf-2 -no-force_cpusubtype_ALL
 #platform_os_ldflags=""
 prefix_path=/usr/local/xbmc-ios-${platform_os_version}
 

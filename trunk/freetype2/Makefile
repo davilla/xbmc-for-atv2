@@ -25,7 +25,8 @@ export CXXFLAGS+=-undefined dynamic_lookup
 export LDFLAGS+=-Wl,-read_only_relocs,suppress
 # force using internal libtool
 export LIBTOOL=builds/unix/libtool
-CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes
+CONFIGURE=./configure --prefix=$(PREFIX) --host=$(HOST) --enable-shared=yes \
+  --without-old-mac-fonts --without-fsspec --without-fsref --without-ats
 
 LIBDYLIB=$(SOURCE)/objs/.libs/lib$(LIBNAME).dylib
 

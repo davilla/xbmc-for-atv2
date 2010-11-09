@@ -49,6 +49,7 @@ configure:
 
 install:
 	sudo make -C $(SOURCE) install
+	sudo cp $(SOURCE)/include/cdio/cdtext.h $(PREFIX)/include/cdio/
 
 clean:
 	make -C $(SOURCE) clean
