@@ -8,7 +8,8 @@ include ../config.mk
 
 # lib name, version
 LIBNAME=libpng
-VERSION=1.4.4
+#VERSION=1.4.4
+VERSION=1.2.38
 SOURCE=$(LIBNAME)-$(VERSION)
 # download location and format
 BASE_URL=ftp://ftp.simplesystems.org/pub/libpng/png/src
