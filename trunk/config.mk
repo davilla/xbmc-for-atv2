@@ -1,10 +1,11 @@
 platform_os=iPhoneOS
 platform_os_version=4.1
-platform_host=arm-apple-darwin
+platform_gcc_version=4.2.1
+platform_host=arm-apple-darwin10
 platform_path=/Developer/Platforms/iPhoneOS.platform/Developer
 platform_os_min=iphoneos-version-min=${platform_os_version}
-platform_os_cflags=-march=armv7 -mcpu=cortex-a8 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -mdynamic-no-pic -pipe -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -fmessage-length=0 -gdwarf-2 -no-force_cpusubtype_ALL
-#platform_os_ldflags=""
+platform_os_cflags=-march=armv7 -mcpu=cortex-a8 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -mdynamic-no-pic -pipe -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -fmessage-length=0 -gdwarf-2
+platform_os_ldflags=-march=armv7 -mcpu=cortex-a8
 prefix_path=/usr/local/xbmc-ios-${platform_os_version}
 
 #platform_os="MacOSX"
@@ -19,13 +20,13 @@ platform_bin_path=${platform_path}/usr/bin
 
 export NM=/usr/bin/nm
 export CPP=/usr/bin/cpp
-export CXXCPP=${CPP} -I${platform_sdk_path}/usr/include/c++/4.2.1/armv7-apple-darwin10
+export CXXCPP=${CPP} -I${platform_sdk_path}/usr/include/c++/${platform_gcc_version}/${platform_host}
 export CPPFLAGS=-I${platform_sdk_path}/usr/include  -I${prefix_path}/include
-export CC=${platform_bin_path}/arm-apple-darwin10-gcc-4.2.1
+export CC=${platform_bin_path}/${platform_host}-gcc-${platform_gcc_version}
 export CFLAGS=-std=c99 -no-cpp-precomp -m${platform_os_min} -isysroot ${platform_sdk_path} -I${platform_sdk_path}/usr/include ${platform_os_cflags}
 export LD=${platform_bin_path}/ld
 export LDFLAGS=-m${platform_os_min} -isysroot ${platform_sdk_path} -L${platform_sdk_path}/usr/lib ${platform_os_ldflags} -L${prefix_path}/lib
-export CXX=${platform_bin_path}/arm-apple-darwin10-g++-4.2.1 -I${platform_sdk_path}/usr/include/c++/4.2.1/armv7-apple-darwin10
+export CXX=${platform_bin_path}/${platform_host}-g++-${platform_gcc_version} -I${platform_sdk_path}/usr/include/c++/${platform_gcc_version}/${platform_host}
 export CXXFLAGS=-m${platform_os_min} -isysroot ${platform_sdk_path} ${platform_os_cflags}
 export AR=${platform_bin_path}/ar
 export AS=${platform_bin_path}/as
